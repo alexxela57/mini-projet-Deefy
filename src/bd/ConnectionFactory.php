@@ -17,14 +17,19 @@ class ConnectionFactory{
 
     public static function makeConnection(): \PDO
     {
-        if(isset(self::$connexion)===false){
+        if (!isset(self::$connexion)) {
             try {
-                self::$connexion = new \PDO(self::$config["driver"] . ":host=" . self::$config["hostname"] . ";dbname=" . self::$config["dbname"], self::$config['username'], self::$config['password']);
-            } catch (Exception $e){
-                throw new CompteException('Utilisateur ou mot de passe incorrect');
+                self::$connexion = new \PDO(
+                    self::$config["driver"] . ":host=" . self::$config["hostname"] . ";dbname=" . self::$config["dbname"],
+                    self::$config['username'],
+                    self::$config['password']
+                );
+            } catch (Exception $e) {
+                throw new CompteException('Erreur de connexion : ' . $e->getMessage());
             }
         }
 
         return self::$connexion;
     }
+
 }
