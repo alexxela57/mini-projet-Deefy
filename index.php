@@ -57,10 +57,10 @@
 
         <?php
 
-        require_once "vendor/autoload.php";
+        require_once "loader/autoload.php";
 
 
-        \touiteur\bd\ConnectionFactory::setConfig("conf/bd.ini");
+        iutnc\deefy\bd\ConnectionFactory::setConfig("conf/bd.ini");
 
         $dispach = new \touiteur\dispatch\dispatcher();
         $dispach->run(); ?>
