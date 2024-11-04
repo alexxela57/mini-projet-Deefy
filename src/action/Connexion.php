@@ -3,10 +3,8 @@
 namespace iutnc\deefy\action;
 
 use exception\CompteException;
-use touiteur\compte\compteUtil;
-use touiteur\bd\ConnectionFactory;
-
-require_once 'vendor/autoload.php';
+use iutnc\deefy\compte\compteUtil;
+use iutnc\deefy\bd\ConnectionFactory;
 
 class Connexion
 {
