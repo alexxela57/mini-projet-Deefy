@@ -29,9 +29,6 @@ class MesPlaylists {
         $s = '<div class="container">';
         $s .= "<h2>Mes Playlists</h2>";
 
-        // Débogage : Vérifie le contenu de la session
-        var_dump($_SESSION['connection']);
-
         // Vérifie si l'utilisateur est connecté
         if (isset($_SESSION['connection']) && $_SESSION['connection'] instanceof \iutnc\deefy\compte\compteUtil) {
             try {
