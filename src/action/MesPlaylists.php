@@ -16,7 +16,7 @@ class MesPlaylists {
 
         $playlists = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $html = '<div class="container"><h2>Mes Playlists</h2><ul>';
+        $html = '<div class="container"><ul>';
         foreach ($playlists as $playlist) {
             $html .= '<li>' . htmlspecialchars($playlist['name']) . ' - Créée le : ' . htmlspecialchars($playlist['date_creation']) . '</li>';
         }
