@@ -9,10 +9,10 @@ use Exception;
 
 class Connexion
 {
-    public static function connexion($email, $password) {
+    public static function connexion($username, $password) {
         $bd = ConnectionFactory::makeConnection();
-        $st = $bd->prepare("SELECT * FROM users WHERE email = :email");
-        $st->execute(['email' => $email]);
+        $st = $bd->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+        $st->execute(['username' => $username, 'password' => $password]);
 
         $user = $st->fetch();
 
@@ -39,7 +39,7 @@ class Connexion
         $form = '<div class="container">
                     <h2>Connexion</h2>
                     <form action="?action=connexion" method="post">
-                        <input type="text" name="email" placeholder="Email" required>
+                        <input type="text" name="Username" placeholder="utilisateur" required>
                         <input type="password" name="Password" placeholder="Mot de passe" required>
                         <button type="submit">Valider</button>
                     </form>
