@@ -17,11 +17,11 @@ CREATE TABLE playlists (
 
 -- Création de la table des pistes
 CREATE TABLE tracks (
-    track_id INT AUTO_INCREMENT PRIMARY KEY,
     titre VARCHAR(100) NOT NULL,
     artiste VARCHAR(100) NOT NULL,
     playlist_id INT NOT NULL,
     date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (titre,artiste),
     CONSTRAINT fk_playlist FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id) ON DELETE CASCADE
 );
 
