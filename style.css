@@ -152,3 +152,20 @@ color: black;
 background-color: white;
 border-radius: 10px;
 }
+
+a {
+    text-decoration: none;
+    color: #488016; /* Couleur des liens par défaut */
+}
+
+a:hover {
+    color: #40b904; /* Couleur des liens au survol */
+}
+
+a:visited {
+    color: #b9c204; /* Couleur des liens visités */
+}
+
+a:active {
+    color: #00d26b; /* Couleur des liens lorsqu'ils sont cliqués */
+}
