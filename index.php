@@ -54,9 +54,10 @@
 
         <?php
 
-        require_once "src/loader/autoLoader.php";
+        require_once __DIR__ . '/src/loader/vendor/autoload.php';
 
-        $loader = new iutnc\deefy\loader\autoLoader("iutnc\\deefy\\", "src/");
+
+        $loader = new iutnc\deefy\loader\autoLoader("iutnc\\deefy\\", "src");
         $loader->register();
 
 
