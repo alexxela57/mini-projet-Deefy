@@ -36,8 +36,7 @@ class Inscription
 
         try {
             // Vérifie si l'utilisateur avec cet email ou nom d'utilisateur existe déjà
-            $stmt = $bd->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt = $bd->prepare("SELECT * FROM users WHERE username = :username");
             $stmt->bindParam(':username', $username, PDO::PARAM_STR);
             $stmt->execute();
 
