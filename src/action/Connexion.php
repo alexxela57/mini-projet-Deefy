@@ -5,6 +5,7 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\exception\CompteException;
 use iutnc\deefy\bd\ConnectionFactory;
 use iutnc\deefy\compte\compteUtil;
+use Exception;
 
 class Connexion
 {
@@ -15,9 +16,8 @@ class Connexion
 
         $user = $st->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['connection'] = new compteUtil($user['username'], $user['email'], $user['role']);
-        } else {
+        try{$_SESSION['connection'] = new compteUtil($user['username'], $user['email'], $user['role']);
+        }catch(Exception $e){
             throw new CompteException("La connexion a échoué. Vérifiez votre email et votre mot de passe.");
         }
     }

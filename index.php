@@ -23,6 +23,9 @@
                 <a href="?action=creerPlaylist">
                     <button class="bouton">Créer une playlist</button>
                 </a>
+                <a href="?action=deconnexion">
+                    <button class="bouton">Déconnexion</button>
+                </a>
             BOUTON;
         } else {
             echo <<<BOUTON

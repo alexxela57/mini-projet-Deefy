@@ -25,6 +25,9 @@ class Dispatcher
             case("inscription"):
                 $action_class = new Action\Inscription();
                 break;
+            case("deconnexion"):
+                $action_class = new Action\Deconnexion();
+                break;
             default:
                 $action_class = new Action\defaultAction();
                 break;
