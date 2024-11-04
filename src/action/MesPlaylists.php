@@ -64,14 +64,20 @@ class MesPlaylists {
         $html .= '<h3>Ajouter une musique</h3>';
         $html .= '<form method="post" action="?action=mesPlaylists&current_playlist_id=' . $playlistId . '&addTrack=1">';
         $html .= '<label for="titre">Titre :</label>';
-        $html .= '<input type="text" name="titre" id="titre" required>';
+        $html .= '<input class = "ajoutForm" type="text" name="titre" id="titre" required>';
         $html .= '<label for="artiste">Artiste :</label>';
-        $html .= '<input type="text" name="artiste" id="artiste" required>';
-        $html .= '<button type="submit">Valider</button>';
+        $html .= '<input class = "ajoutForm" type="text" name="artiste" id="artiste" required>';
+
+        // Nouveau conteneur pour le bouton
+        $html .= '<div class="button-container">';
+        $html .= '<button type="submit" class="bouton">Valider</button>'; // Ajout de la classe 'bouton'
+        $html .= '</div>'; // Fin du conteneur
         $html .= '</form>';
         $html .= '</div>';
         return $html;
     }
+
+
 
     private function sauvegarderPiste(int $playlistId) {
         if (isset($_POST['titre']) && isset($_POST['artiste'])) {
@@ -113,6 +119,10 @@ class MesPlaylists {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['current_playlist_id'])) {
                     $currentPlaylistId = (int)$_GET['current_playlist_id'];
                     $this->sauvegarderPiste($currentPlaylistId);
+
+                    // Redirige vers l'affichage de la playlist courante après l'ajout
+                    header("Location: ?action=mesPlaylists&current_playlist_id=" . $currentPlaylistId);
+                    exit; // Terminez le script pour éviter d'afficher le reste de la page
                 }
 
                 // Affiche la playlist courante ou toutes les playlists de l'utilisateur
@@ -133,4 +143,6 @@ class MesPlaylists {
         $s .= '</div>';
         return $s;
     }
+
+
 }

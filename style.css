@@ -191,3 +191,7 @@ a:active {
     font-size: 0.9em;
     margin-left: auto; /* Place la date complètement à droite */
 }
+
+.ajoutForm {
+    font-size: 0.8em;
+}
