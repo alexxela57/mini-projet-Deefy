@@ -1,6 +1,6 @@
 <?php
 
-namespace action;
+namespace iutnc\deefy\action;
 
 use exception\CompteException;
 use touiteur\compte\compteUtil;

@@ -2,7 +2,7 @@
 
 namespace iutnc\deefy\dispatch;
 
-use \action as Action;
+use iutnc\deefy\action as Action;
 
 class Dispatcher
 {
