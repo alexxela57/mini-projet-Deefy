@@ -3,7 +3,7 @@
         'name' => 's3/deefy',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '89d29b54b4ef31ea108371d8678de2ae2b13d17c',
+        'reference' => '616e0001459a4678c34b8b8ffca12feb90119578',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         's3/deefy' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '89d29b54b4ef31ea108371d8678de2ae2b13d17c',
+            'reference' => '616e0001459a4678c34b8b8ffca12feb90119578',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

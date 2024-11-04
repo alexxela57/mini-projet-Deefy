@@ -9,7 +9,7 @@ CREATE TABLE users (
 -- Création de la table des playlists
 CREATE TABLE playlists (
     playlist_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    titre VARCHAR(100) NOT NULL,
     username VARCHAR(50) NOT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_user FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
@@ -30,7 +30,7 @@ INSERT INTO users (username, email, password, role) VALUES ('alexandre', 'alexan
 INSERT INTO users (username, email, password, role) VALUES ('elias', 'elias@gmail.com', 'elias', 'STANDARD');
 
 -- Ajout d'une playlist pour les tests
-INSERT INTO playlists (name, username) VALUES ('Playlist1', 'alexandre');
+INSERT INTO playlists (titre, username) VALUES ('Playlist1', 'alexandre');
 
 -- Ajout d'une piste pour les tests
 INSERT INTO tracks (titre, artiste, playlist_id) VALUES ('Titre', 'Artiste', 1);

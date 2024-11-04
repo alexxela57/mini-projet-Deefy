@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'iutnc\\deefy\\compte\\' => array($baseDir . '/../compte'),
     'iutnc\\deefy\\' => array($baseDir . '/..'),
 );

@@ -9,11 +9,16 @@ class ComposerStaticInit380839466213f58f238610a9aa13b41d
     public static $prefixLengthsPsr4 = array (
         'i' => 
         array (
+            'iutnc\\deefy\\compte\\' => 19,
             'iutnc\\deefy\\' => 12,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'iutnc\\deefy\\compte\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/../compte',
+        ),
         'iutnc\\deefy\\' => 
         array (
             0 => __DIR__ . '/../..' . '/..',
