@@ -10,6 +10,7 @@
     <div class="d1"><h1>Deefy</h1></div>
     <div class="d2">
         <?php
+        require_once __DIR__ . '/src/loader/vendor/autoload.php';
         session_start();
         if (isset($_SESSION['connection'])) {
             $_SESSION['compteCourant'] = $_SESSION['connection'];
@@ -51,7 +52,7 @@
         <br>
 
         <?php
-        require_once __DIR__ . '/src/loader/vendor/autoload.php';
+
 
         use iutnc\deefy\bd\ConnectionFactory;
         use iutnc\deefy\dispatch\Dispatcher;

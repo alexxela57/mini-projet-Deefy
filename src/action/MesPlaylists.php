@@ -3,15 +3,50 @@
 namespace iutnc\deefy\action;
 
 use Exception;
+use iutnc\deefy\bd\ConnectionFactory;
+use PDO;
 
-class mesPlaylists {
+class MesPlaylists {
 
-    public function execute():string{
-        try {
+    public function AffichePlaylist(string $username): string {
+        $bd = ConnectionFactory::makeConnection();
+        $stmt = $bd->prepare("SELECT name, date_creation FROM playlists WHERE username = :username");
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
 
-        } catch (Exception $e){
-            throw new Exception($e->getMessage());
+        $playlists = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $html = '<div class="container"><h2>Mes Playlists</h2><ul>';
+        foreach ($playlists as $playlist) {
+            $html .= '<li>' . htmlspecialchars($playlist['name']) . ' - Créée le : ' . htmlspecialchars($playlist['date_creation']) . '</li>';
         }
-        return "";
+        $html .= '</ul></div>';
+
+        return $html;
     }
+
+    public function execute(): string {
+        $s = '<div class="container">';
+        $s .= "<h2>Mes Playlists</h2>";
+
+        // Débogage : Vérifie le contenu de la session
+        var_dump($_SESSION['connection']);
+
+        // Vérifie si l'utilisateur est connecté
+        if (isset($_SESSION['connection']) && $_SESSION['connection'] instanceof \iutnc\deefy\compte\compteUtil) {
+            try {
+                $username = $_SESSION['connection']->__get('username');
+                $s .= $this->AffichePlaylist($username);
+            } catch (Exception $e) {
+                $s .= "<p>Erreur : " . $e->getMessage() . "</p>";
+            }
+        } else {
+            $s .= "<p>Vous devez être connecté pour voir vos playlists.</p>";
+        }
+
+        $s .= '</div>';
+        return $s;
+    }
+
+
 }
