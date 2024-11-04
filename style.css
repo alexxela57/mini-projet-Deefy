@@ -57,7 +57,7 @@ section {
     border-width: 3px;
     border-color: rgba(82, 120, 122, 0.48);
     align-items: center;
-    background: linear-gradient(180deg, rgba(78, 181, 186, 73) 0%, rgba(42, 241, 250, 98) 100%);
+    background: linear-gradient(180deg, rgba(42, 241, 250, 98) 0%, rgba(78, 181, 186, 73)100%);
     font-size: 1.5em;
     margin-top: 5%;
     box-sizing: border-box;
@@ -145,19 +145,19 @@ a {
 
 a {
     text-decoration: none;
-    color: #488016; /* Couleur des liens par défaut */
+    color: #000000; /* Couleur des liens par défaut */
 }
 
 a:hover {
-    color: #40b904; /* Couleur des liens au survol */
+    color: #000000; /* Couleur des liens au survol */
 }
 
 a:visited {
-    color: #b9c204; /* Couleur des liens visités */
+    color: #000000; /* Couleur des liens visités */
 }
 
 a:active {
-    color: #00d26b; /* Couleur des liens lorsqu'ils sont cliqués */
+    color: #000000; /* Couleur des liens lorsqu'ils sont cliqués */
 }
 
 /* Styles pour les playlists */
@@ -165,8 +165,8 @@ a:active {
     text-decoration: none;
     color: inherit;
     display: block;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    /* Suppression des bordures */
+    border: none; /* Aucune bordure */
     padding: 15px; /* Ajout de padding interne pour chaque playlist */
     transition: background-color 0.2s ease;
 }
