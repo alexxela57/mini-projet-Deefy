@@ -4,7 +4,7 @@ namespace dispatch;
 
 use \action as Action;
 
-class dispatcher
+class Dispatcher
 {
     private string $action = "";
 

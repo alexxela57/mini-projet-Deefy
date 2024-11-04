@@ -4,7 +4,7 @@ namespace action;
 
 require_once 'src/loader/vendor/autoload.php';
 
-class defaultAction
+class DefaultAction
 {
     public function __construct()
     {
