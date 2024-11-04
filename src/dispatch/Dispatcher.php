@@ -28,6 +28,8 @@ class Dispatcher
             case("deconnexion"):
                 $action_class = new Action\Deconnexion();
                 break;
+            case("mesPlaylists"):
+                $action_class = new Action\MesPlaylists();
             default:
                 $action_class = new Action\defaultAction();
                 break;
