@@ -2,10 +2,8 @@
 
 namespace iutnc\deefy\action;
 
-use exception\CompteException;
-use touiteur\bd\ConnectionFactory;
-
-require_once 'vendor/autoload.php';
+use iutnc\deefy\exception\CompteException;
+use iutnc\deefy\bd\ConnectionFactory;
 
 class Inscription
 {

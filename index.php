@@ -2,11 +2,8 @@
 <html lang="fr">
 <head>
     <title>Deefy</title>
-    <link rel="stylesheet" type
-    "text/css" href="style.css">
-
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
 
 <body>
 <header>
@@ -15,31 +12,30 @@
         <?php
         session_start();
         if (isset($_SESSION['connection'])) {
-            $_SESSION['compteCourant']=$_SESSION['connection'];
+            $_SESSION['compteCourant'] = $_SESSION['connection'];
             echo <<<BOUTON
                 <a href="?action=pageCompte">
                     <button class="bouton">Page perso</button>
                 </a>
-                <a href="?action=ecrireTouite"
-                    <button class="bouton">ecrire Un touite</button>
+                <a href="?action=mesPlaylists">
+                    <button class="bouton">Mes playlists</button>
                 </a>
-                BOUTON;
-        }else{
-
+                <a href="?action=creerPlaylist">
+                    <button class="bouton">Créer une playlist</button>
+                </a>
+            BOUTON;
+        } else {
             echo <<<BOUTON
                 <a href="?action=connexion">
-                    <button class="bouton">connexion</button>
+                    <button class="bouton">Connexion</button>
                 </a>
                 <a href="?action=inscription">
-                    <button class="bouton">inscription</button>
+                    <button class="bouton">Inscription</button>
                 </a>
-                BOUTON;
+            BOUTON;
         }
-        session_abort();
         ?>
-
     </div>
-
 </header>
 
 <div class="main">
@@ -51,14 +47,20 @@
     <section>
         <br>
 
-
         <?php
-
         require_once __DIR__ . '/src/loader/vendor/autoload.php';
 
-        iutnc\deefy\bd\ConnectionFactory::setConfig("conf/bd.ini");
+        use iutnc\deefy\bd\ConnectionFactory;
+        use iutnc\deefy\dispatch\Dispatcher;
 
-        $dispach = new iutnc\deefy\dispatch\Dispatcher();
-        $dispach->run(); ?>
+        // Initialise la configuration de la base de données
+        ConnectionFactory::setConfig(__DIR__ . '/conf/bd.ini');
+
+        // Crée et exécute le dispatcher
+        $dispatcher = new Dispatcher();
+        $dispatcher->run();
+        ?>
     </section>
 </div>
+</body>
+</html>
