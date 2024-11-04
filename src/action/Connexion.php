@@ -24,10 +24,10 @@ class Connexion
 
     public function execute(): string {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $email = $_POST['email'];
+            $username = $_POST['Username'];
             $password = $_POST['Password'];
             try {
-                self::connexion($email, $password);
+                self::connexion($username, $password);
                 $message = "Connexion réussie !";
                 header("Location: ?action=pageCompte");
                 exit;
