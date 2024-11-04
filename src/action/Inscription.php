@@ -27,9 +27,9 @@ class Inscription
      */
     public function CreerCompte($username, $email, $password, $role = 'STANDARD')
     {
-//        if (!$this->checkPasswordStrength($password)) {
-//            throw new CompteException("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
-//        }
+        if (!$this->checkPasswordStrength($password)) {
+            throw new CompteException("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+        }
 
         // Connexion à la base de données
         $bd = ConnectionFactory::makeConnection();
