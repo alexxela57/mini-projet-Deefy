@@ -39,7 +39,7 @@ class MesPlaylists {
 
         if (!$playlist) return "<p>Playlist introuvable.</p>";
 
-        $html = '<div class="container"><h3>Playlist Courante : ' . htmlspecialchars($playlist['titre']) . '</h3><ul>';
+        $html = '<div class="container"><h3>' . htmlspecialchars($playlist['titre']) . '</h3><ul>';
 
         // Récupère toutes les pistes de la playlist courante
         $stmtTracks = $bd->prepare("SELECT titre, artiste FROM tracks WHERE playlist_id = :playlist_id");
@@ -48,7 +48,7 @@ class MesPlaylists {
 
         $tracks = $stmtTracks->fetchAll(PDO::FETCH_ASSOC);
         if (empty($tracks)) {
-            $html .= '<li>Aucune piste pour le moment.</li>';
+            $html .= '</ul><p>Aucune piste pour le moment.</p>';
         } else {
             foreach ($tracks as $track) {
                 $html .= '<li>' . htmlspecialchars($track['titre']) . ' - ' . htmlspecialchars($track['artiste']) . '</li>';
@@ -59,28 +59,69 @@ class MesPlaylists {
         return $html;
     }
 
+    public function ajouterPiste(int $playlistId): string {
+        $html = '<div class="container">';
+        $html .= '<h3>Ajouter une musique</h3>';
+        $html .= '<form method="post" action="?action=mesPlaylists&current_playlist_id=' . $playlistId . '&addTrack=1">';
+        $html .= '<label for="titre">Titre :</label>';
+        $html .= '<input type="text" name="titre" id="titre" required>';
+        $html .= '<label for="artiste">Artiste :</label>';
+        $html .= '<input type="text" name="artiste" id="artiste" required>';
+        $html .= '<button type="submit">Valider</button>';
+        $html .= '</form>';
+        $html .= '</div>';
+        return $html;
+    }
+
+    private function sauvegarderPiste(int $playlistId) {
+        if (isset($_POST['titre']) && isset($_POST['artiste'])) {
+            $titre = $_POST['titre'];
+            $artiste = $_POST['artiste'];
+            $bd = ConnectionFactory::makeConnection();
+
+            $stmt = $bd->prepare("INSERT INTO tracks (titre, artiste, playlist_id) VALUES (:titre, :artiste, :playlist_id)");
+            $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
+            $stmt->bindParam(':artiste', $artiste, PDO::PARAM_STR);
+            $stmt->bindParam(':playlist_id', $playlistId, PDO::PARAM_INT);
+
+            $stmt->execute();
+        }
+    }
+
     public function execute(): string {
         $s = '<div class="container">';
 
         // Affiche le bouton "Retour" seulement si une playlist courante est sélectionnée
         if (isset($_GET['current_playlist_id'])) {
             $s .= '<a class="back-button" href="?action=mesPlaylists">← Retour</a>';
+            $s .= '<a class="bouton" href="?action=mesPlaylists&current_playlist_id=' . $_GET['current_playlist_id'] . '&addTrack=1">Ajouter musique</a>';
         }
 
         $s .= "<h2>Mes Playlists</h2>";
 
-        // Vérifie si l'utilisateur est connecté
         if (isset($_SESSION['connection']) && $_SESSION['connection'] instanceof \iutnc\deefy\compte\compteUtil) {
             try {
                 $username = $_SESSION['connection']->__get('username');
 
-                // Vérifie si un ID de playlist courante est spécifié dans l'URL
+                // Si une piste doit être ajoutée (formulaire d'ajout de piste affiché)
+                if (isset($_GET['addTrack']) && isset($_GET['current_playlist_id'])) {
+                    $currentPlaylistId = (int)$_GET['current_playlist_id'];
+                    $s .= $this->ajouterPiste($currentPlaylistId);
+                }
+
+                // Si les données du formulaire sont envoyées pour ajouter une piste
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['current_playlist_id'])) {
+                    $currentPlaylistId = (int)$_GET['current_playlist_id'];
+                    $this->sauvegarderPiste($currentPlaylistId);
+                }
+
+                // Affiche la playlist courante ou toutes les playlists de l'utilisateur
                 if (isset($_GET['current_playlist_id'])) {
                     $currentPlaylistId = (int)$_GET['current_playlist_id'];
-                    $_SESSION['current_playlist_id'] = $currentPlaylistId; // Stocke l'ID de la playlist courante en session
+                    $_SESSION['current_playlist_id'] = $currentPlaylistId;
                     $s .= $this->AffichePlaylistCourante($currentPlaylistId);
                 } else {
-                    $s .= $this->AffichePlaylist($username); // Affiche toutes les playlists
+                    $s .= $this->AffichePlaylist($username);
                 }
             } catch (Exception $e) {
                 $s .= "<p>Erreur : " . $e->getMessage() . "</p>";
