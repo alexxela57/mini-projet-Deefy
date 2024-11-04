@@ -1,5 +1,5 @@
 <?php
-namespace exception;
+namespace iutnc\deefy\exception;
 class InvalidePropety extends \Exception
 {
 

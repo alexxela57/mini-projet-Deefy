@@ -1,6 +1,8 @@
 <?php
 
 namespace iutnc\deefy\bd;
+use Exception;
+use iutnc\deefy\exception\CompteException;
 
 class ConnectionFactory{
     public static array $config;
@@ -16,7 +18,11 @@ class ConnectionFactory{
     public static function makeConnection(): \PDO
     {
         if(isset(self::$connexion)===false){
-            self::$connexion=new \PDO(self::$config["driver"].":host=".self::$config["hostname"].";dbname=".self::$config["dbname"],self::$config['username'],self::$config['password']);
+            try {
+                self::$connexion = new \PDO(self::$config["driver"] . ":host=" . self::$config["hostname"] . ";dbname=" . self::$config["dbname"], self::$config['username'], self::$config['password']);
+            } catch (Exception $e){
+                throw new CompteException('Utilisateur ou mot de passe incorrect');
+            }
         }
 
         return self::$connexion;

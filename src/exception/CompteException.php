@@ -1,8 +1,9 @@
 <?php
 
-namespace exception;
+namespace iutnc\deefy\exception;
+use Exception;
 
-class CompteException extends \Exception
+class CompteException extends Exception
 {
 
 }
