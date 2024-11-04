@@ -1,0 +1,37 @@
+-- Création de la table des utilisateurs
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('STANDARD', 'ADMIN') DEFAULT 'STANDARD'
+);
+
+-- Création de la table des playlists
+CREATE TABLE playlists (
+    playlist_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Création de la table des pistes
+CREATE TABLE tracks (
+    track_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    artist VARCHAR(100) NOT NULL,
+    playlist_id INT NOT NULL,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_playlist FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id) ON DELETE CASCADE
+);
+
+-- Ajout d'utilisateurs pour les tests
+INSERT INTO users (username, email, password, role) VALUES ('alexandre', 'alexandre@gmail.com', 'alexandre', 'STANDARD');
+INSERT INTO users (username, email, password, role) VALUES ('elias', 'elias@gmail.com', 'elias', 'STANDARD');
+
+-- Ajout d'une playlist pour les tests
+INSERT INTO playlists (name, user_id) VALUES ('Playlist1', 1);
+
+-- Ajout d'une piste pour les tests
+INSERT INTO tracks (title, artist, playlist_id) VALUES ('Titre', 'Artiste', 1);
