@@ -1,6 +1,6 @@
 <?php
 
-namespace deefy\bd;
+namespace iutnc\deefy\bd;
 
 class ConnectionFactory{
     public static array $config;
