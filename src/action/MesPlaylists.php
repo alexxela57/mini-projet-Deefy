@@ -10,7 +10,7 @@ class MesPlaylists {
 
     public function AffichePlaylist(string $username): string {
         $bd = ConnectionFactory::makeConnection();
-        $stmt = $bd->prepare("SELECT name, date_creation FROM playlists WHERE username = :username");
+        $stmt = $bd->prepare("SELECT titre, date_creation FROM playlists WHERE username = :username");
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
 
@@ -18,7 +18,7 @@ class MesPlaylists {
 
         $html = '<div class="container"><ul>';
         foreach ($playlists as $playlist) {
-            $html .= '<li>' . htmlspecialchars($playlist['name']) . ' - Créée le : ' . htmlspecialchars($playlist['date_creation']) . '</li>';
+            $html .= '<li>' . htmlspecialchars($playlist['titre']) . ' - Créée le : ' . htmlspecialchars($playlist['date_creation']) . '</li>';
         }
         $html .= '</ul></div>';
 
