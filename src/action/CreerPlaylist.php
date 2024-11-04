@@ -11,24 +11,23 @@ class CreerPlaylist
 {
     public function creerPlaylist($titre, $username)
     {
-        // Connexion à la base de données
         $bd = ConnectionFactory::makeConnection();
 
         try {
-            // Insère la nouvelle playlist dans la base de données avec le titre et le username
+            // Insère la nouvelle playlist dans la base de données
             $stmt = $bd->prepare("INSERT INTO playlists (titre, username) VALUES (:titre, :username)");
             $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
             $stmt->bindParam(':username', $username, PDO::PARAM_STR);
             $stmt->execute();
+
+            // Récupère l'ID de la nouvelle playlist et l'enregistre comme playlist courante
+            $_SESSION['current_playlist_id'] = $bd->lastInsertId();
 
         } catch (Exception $e) {
             throw new Exception("Erreur lors de la création de la playlist : " . $e->getMessage());
         }
     }
 
-    /**
-     * Gère le processus de création de playlist et affiche le formulaire
-     */
     public function execute(): string
     {
         $s = '<div class="container">';
@@ -36,27 +35,25 @@ class CreerPlaylist
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $titre = $_POST["titre"] ?? '';
-            var_dump($_SESSION);
 
-            // Vérification de la session de connexion de l'utilisateur
             if (isset($_SESSION['connection']) && $_SESSION['connection'] instanceof compteUtil) {
-                // Utilisation de la méthode magique __get pour obtenir le nom d'utilisateur
-                $username = $_SESSION['connection']->username; // Utilisation du getter
+                $username = $_SESSION['connection']->username;
 
                 try {
                     $this->creerPlaylist($titre, $username);
-                    header("Location: ?action=menu");  // Redirection vers le menu
-                    exit;
+
+                    // Utiliser AffichePlaylistCourante pour afficher uniquement la playlist nouvellement créée
+                    $mesPlaylists = new MesPlaylists();
+                    $s = $mesPlaylists->AffichePlaylistCourante($_SESSION['current_playlist_id']);
+                    return $s;  // Affiche la playlist courante directement
                 } catch (Exception $e) {
                     $s .= "<p>Erreur : " . $e->getMessage() . "</p>";
                 }
             } else {
-                // Message d'erreur si l'utilisateur n'est pas connecté
                 $s .= "<p>Erreur : utilisateur non connecté. Veuillez vous connecter pour créer une playlist.</p>";
             }
         }
 
-        // Formulaire HTML
         $s .= '<form action="?action=creerPlaylist" method="post">
             <input type="text" name="titre" placeholder="Titre de la playlist" required>
             <button type="submit">Créer</button>
