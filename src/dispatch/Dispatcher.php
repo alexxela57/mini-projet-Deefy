@@ -1,6 +1,6 @@
 <?php
 
-namespace dispatch;
+namespace iutnc\deefy\dispatch;
 
 use \action as Action;
 

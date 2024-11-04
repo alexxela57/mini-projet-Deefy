@@ -58,7 +58,7 @@
 
         iutnc\deefy\bd\ConnectionFactory::setConfig("conf/bd.ini");
 
-        $dispach = new iutnc\deefy\dispatch\Dispatcher::dispatcher();
+        $dispach = new iutnc\deefy\dispatch\Dispatcher();
         $dispach->run(); ?>
     </section>
 </div>
