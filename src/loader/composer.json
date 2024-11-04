@@ -4,7 +4,8 @@
   "type": "project",
   "autoload": {
     "psr-4": {
-      "iutnc\\deefy\\" : "../../src"
+      "iutnc\\deefy\\" : "../../src",
+      "iutnc\\deefy\\compte\\" : "../../src/compte"
     }
   }
 }
