@@ -47,9 +47,6 @@
         <a href="?">
             <button class="boutonNav">Accueil</button>
         </a>
-        <a href="?action=afficherListTouites">
-            <button class="boutonNav">Afficher la liste des derniers Touites</button>
-        </a>
     </nav>
     <section>
         <br>
