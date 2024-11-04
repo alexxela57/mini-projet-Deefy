@@ -30,6 +30,7 @@ class Dispatcher
                 break;
             case("mesPlaylists"):
                 $action_class = new Action\MesPlaylists();
+                break;
             default:
                 $action_class = new Action\defaultAction();
                 break;
