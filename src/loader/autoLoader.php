@@ -1,13 +1,13 @@
 <?php
 
 namespace iutnc\deefy\loader;
-class Psr4ClassLoader {
+class autoLoader {
     private string $prefix;
     private string $baseDir;
 
     public function __construct(string $prefix, string $baseDir) {
         $this->prefix = rtrim($prefix,'\\').'\\';
-        $this->baseDir = rtrim($baseDir, DIRECTORY_SEPARATOR) . 'Psr4ClassLoader.php/';
+        $this->baseDir = rtrim($baseDir, DIRECTORY_SEPARATOR) . 'autoLoader.php/';
     }
     public function loadClass(string $className):void{
         if (strpos($className, $this->prefix) !== 0) {

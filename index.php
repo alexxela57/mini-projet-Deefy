@@ -57,7 +57,7 @@
 
         <?php
 
-        require_once "loader/autoload.php";
+        require_once "loader/autoLoader.php";
 
 
         iutnc\deefy\bd\ConnectionFactory::setConfig("conf/bd.ini");
