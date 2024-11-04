@@ -56,6 +56,9 @@
 
         require_once "src/loader/autoLoader.php";
 
+        $loader = new iutnc\deefy\loader\autoLoader("iutnc\\deefy\\", "src/");
+        $loader->register();
+
 
         iutnc\deefy\bd\ConnectionFactory::setConfig("conf/bd.ini");
 
