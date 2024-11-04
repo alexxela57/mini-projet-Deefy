@@ -4,78 +4,94 @@ namespace iutnc\deefy\action;
 
 use iutnc\deefy\exception\CompteException;
 use iutnc\deefy\bd\ConnectionFactory;
+use PDO;
+use Exception;
 
 class Inscription
 {
-    private $email;
-    private $passwd;
-    private $role;
-    private $nom;
-    private $prenom;
-
-
-    public function checkPasswordStrength(string $pass,
-                                          int $minimumLength): bool {
-
-        $length = (strlen($pass) < $minimumLength); // longueur minimale
-        $digit = preg_match("#[\d]#", $pass); // au moins un digit
-        $special = preg_match("#[\W]#", $pass); // au moins un car. spécial
-        $lower = preg_match("#[a-z]#", $pass); // au moins une minuscule
-        $upper = preg_match("#[A-Z]#", $pass); // au moins une majuscule
-        if (!$length || !$digit || !$special || !$lower || !$upper)return false;
-        return true;
+    /**
+     * Vérifie la force du mot de passe
+     */
+    public function checkPasswordStrength(string $pass, int $minimumLength = 8): bool
+    {
+        $length = strlen($pass) >= $minimumLength;
+        $digit = preg_match("#[0-9]#", $pass);
+        $special = preg_match("#[\W]#", $pass);
+        $lower = preg_match("#[a-z]#", $pass);
+        $upper = preg_match("#[A-Z]#", $pass);
+        return $length && $digit && $special && $lower && $upper;
     }
 
-    public function CreerCompte($nom,$prenom,$email, $passwd, $role=1){
-        // Vérifie la qualité du mot de passe
-        if ($this->checkPasswordStrength($passwd,3)) {
-            throw new CompteException("Le mot de passe doit avoir au moins 3 caractères.");
-        }
+    /**
+     * Crée un nouveau compte utilisateur
+     */
+    public function CreerCompte($username, $email, $password, $role = 'STANDARD')
+    {
+//        if (!$this->checkPasswordStrength($password)) {
+//            throw new CompteException("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+//        }
 
-        // Vérifie si l'utilisateur avec cet email existe déjà
+        // Connexion à la base de données
         $bd = ConnectionFactory::makeConnection();
-        $st = $bd->prepare("SELECT * FROM email WHERE adresseUtil = '".$email."'");
-        $st->execute();
-        $existingUser = $st->fetch();
 
-        if ($existingUser) {
-            throw new CompteException("Un compte avec cet email existe déjà.");
+        try {
+            // Vérifie si l'utilisateur avec cet email ou nom d'utilisateur existe déjà
+            $stmt = $bd->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->fetch()) {
+                throw new CompteException("Un compte avec cet e-mail ou ce nom d'utilisateur existe déjà.");
+            }
+
+            // Encode le mot de passe
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insère le nouvel utilisateur dans la base de données
+            $stmt = $bd->prepare("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)");
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+            $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+            $stmt->execute();
+
+        } catch (Exception $e) {
+            throw new CompteException("Erreur lors de l'inscription : " . $e->getMessage());
         }
-
-        // Encode le mot de passe
-        $hashedPassword = password_hash($passwd, PASSWORD_DEFAULT);
-
-        // Insère le nouvel utilisateur dans la base de données
-
-        $st = $bd->prepare("INSERT INTO utilisateur (nomUtil,prenomUtil,mdpUtil) VALUES ('".$nom."','".$prenom."','".$hashedPassword."')");
-        $st->execute();
-
-        $st = $bd->prepare("INSERT INTO email (idUtil,adresseUtil) VALUES ((SELECT idUtil FROM utilisateur where nomUtil ='".$nom."'),'".$email."')");
-        $st->execute();
-
     }
 
-    public function execute():string
+    /**
+     * Gère le processus d'inscription et affiche le formulaire
+     */
+    public function execute(): string
     {
         $bd = ConnectionFactory::makeConnection();
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            $n = $_POST["Nom"];
-            $p = $_POST["Prenom"];
-            $e = $_POST["email"];
-            $pwd = $_POST["Password"];
-            self::CreerCompte($n,$p,$e,$pwd);
-            $s = "ça marche bien";
-        }
         $s = '<div class="container">';
-        $s = $s . "<h2>Inscription</h2>";
+        $s .= "<h2>Inscription</h2>";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $username = $_POST["username"] ?? '';
+            $email = $_POST["email"] ?? '';
+            $password = $_POST["password"] ?? '';
+
+            try {
+                $this->CreerCompte($username, $email, $password);
+                $s .= "<p>Inscription réussie !</p>";
+            } catch (CompteException $e) {
+                $s .= "<p>Erreur : " . $e->getMessage() . "</p>";
+            }
+        }
+
+        // Formulaire HTML
         $s .= '<form id="f1" action="?action=inscription" method="post">
-                <input type="text" name = "Nom" placeholder="<Nom>" >
-                <input type="text" name = "Prenom" placeholder="<Prenom>" >
-                <input type="text" name = "email" placeholder="<email>" >
-                <input type="password" name = "Password" placeholder="<Password>">
+                <input type="text" name="username" placeholder="Nom d\'utilisateur" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
                 <button type="submit">Valider</button>
-              </form>';
+               </form>';
         $s .= '</div>';
+
         return $s;
     }
 }
