@@ -1,6 +1,7 @@
 <?php
 
 namespace iutnc\deefy\bd;
+
 use Exception;
 use iutnc\deefy\exception\CompteException;
 

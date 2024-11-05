@@ -2,7 +2,9 @@
 
 namespace iutnc\deefy\dispatch;
 
-use iutnc\deefy\action as Action;
+use iutnc\deefy\action\connexion as connexion;
+use iutnc\deefy\action\playlist as playlist;
+use iutnc\deefy\action as action;
 
 class Dispatcher
 {
@@ -20,22 +22,22 @@ class Dispatcher
     {
         switch ($this->action) {
             case("connexion"):
-                $action_class = new Action\Connexion();
+                $action_class = new connexion\Connexion();
                 break;
             case("inscription"):
-                $action_class = new Action\Inscription();
+                $action_class = new connexion\Inscription();
                 break;
             case("deconnexion"):
-                $action_class = new Action\Deconnexion();
+                $action_class = new connexion\Deconnexion();
                 break;
             case("mesPlaylists"):
-                $action_class = new Action\MesPlaylists();
+                $action_class = new playlist\MesPlaylists();
                 break;
             case("creerPlaylist"):
-                $action_class = new Action\CreerPlaylist();
+                $action_class = new playlist\CreerPlaylist();
                 break;
             default:
-                $action_class = new Action\defaultAction();
+                $action_class = new action\defaultAction();
                 break;
 
         }

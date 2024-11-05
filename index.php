@@ -15,9 +15,6 @@
         if (isset($_SESSION['connection'])) {
             $_SESSION['compteCourant'] = $_SESSION['connection'];
             echo <<<BOUTON
-                <a href="?action=pageCompte">
-                    <button class="bouton">Page perso</button>
-                </a>
                 <a href="?action=mesPlaylists">
                     <button class="bouton">Mes playlists</button>
                 </a>
@@ -41,6 +38,7 @@
         ?>
     </div>
 </header>
+
 
 <div class="main">
     <nav>
@@ -66,5 +64,6 @@
         ?>
     </section>
 </div>
+
 </body>
 </html>

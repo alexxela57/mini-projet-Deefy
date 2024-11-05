@@ -1,6 +1,6 @@
 <?php
 
-namespace iutnc\deefy\action;
+namespace iutnc\deefy\action\connexion;
 
 use iutnc\deefy\exception\CompteException;
 use iutnc\deefy\bd\ConnectionFactory;

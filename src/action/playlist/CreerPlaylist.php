@@ -1,6 +1,6 @@
 <?php
 
-namespace iutnc\deefy\action;
+namespace iutnc\deefy\action\playlist;
 
 use iutnc\deefy\bd\ConnectionFactory;
 use PDO;

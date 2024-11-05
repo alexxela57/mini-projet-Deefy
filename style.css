@@ -1,8 +1,13 @@
 body {
     display: grid;
-    grid-template-columns: 3fr; /* Auto for d1, 1fr for the rest */
+    grid-template-columns: 3fr;
     grid-template-rows: 75px auto;
     background-color: rgb(16, 88, 91);
+    background-image: url('src/logo.png'); /* Chemin vers votre logo */
+    background-size: 50%; /* Fait en sorte que l'image couvre tout l'élément */
+    background-position: center; /* Centre l'image */
+    background-repeat: no-repeat; /* Empêche la répétition de l'image */
+    background-attachment: fixed; /* Rend l'image d'arrière-plan non scrollable */
 }
 
 header {
@@ -55,7 +60,7 @@ section {
     border-style: solid;
     border-radius: 20px;
     border-width: 3px;
-    border-color: rgba(82, 120, 122, 0.48);
+    border-color: rgba(0, 0, 0, 1);
     align-items: center;
     background: linear-gradient(180deg, rgba(42, 241, 250, 98) 0%, rgba(78, 181, 186, 73)100%);
     font-size: 1.5em;
@@ -198,4 +203,22 @@ a:active {
 
 #creer {
     font-size: 0.8em;
+}
+
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    text-align: center; /* Centre le texte */
+}
+
+#valider {
+    padding: 10px;
+}
+
+.button-container {
+    display: flex;
+    padding-top: 10px;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace iutnc\deefy\action;
+namespace iutnc\deefy\action\playlist;
 
 use Exception;
 use iutnc\deefy\bd\ConnectionFactory;
@@ -13,14 +13,15 @@ class MesPlaylists {
 
         // Récupérer toutes les playlists si l'utilisateur est admin, sinon filtrer par username
         $stmt = $bd->prepare("
-        SELECT p.playlist_id, p.titre, 
+        SELECT p.playlist_id, p.titre, p.date_creation, 
             CASE 
                 WHEN :isAdmin = 1 THEN u.username 
                 ELSE NULL 
             END AS created_by
         FROM playlists p
         LEFT JOIN users u ON p.username = u.username
-        " . (isset($_SESSION['connection']) && $_SESSION['connection']->role !== 'ADMIN' ? ' WHERE p.username = :username' : ''));
+        " . (isset($_SESSION['connection']) && $_SESSION['connection']->role !== 'ADMIN' ? ' WHERE p.username = :username' : '')
+        );
 
         $isAdmin = (isset($_SESSION['connection']) && $_SESSION['connection']->role === 'ADMIN') ? 1 : 0;
         $stmt->bindParam(':isAdmin', $isAdmin, PDO::PARAM_INT);
@@ -48,7 +49,7 @@ class MesPlaylists {
                 if (isset($_SESSION['connection']) && $_SESSION['connection']->role === 'ADMIN') {
                     $html .= '<span class="playlist-created-by">Créée par : ' . htmlspecialchars($playlist['created_by']) . '</span>';
                 } else {
-                    $html .= '<span class="playlist-date">Créée le : ' . htmlspecialchars($playlist['date_creation']) . '</span>';
+                    $html .= '<span class="playlist-date">Créée le : ' . htmlspecialchars($playlist['date_creation']) . '</span>'; // Affiche la date de création pour les utilisateurs standards
                 }
 
                 $html .= '</div></a>';
@@ -59,6 +60,7 @@ class MesPlaylists {
 
         return $html;
     }
+
 
 
     public function AffichePlaylistCourante(int $playlistId): string {
@@ -107,7 +109,7 @@ class MesPlaylists {
 
         // Nouveau conteneur pour le bouton
         $html .= '<div class="button-container">';
-        $html .= '<button type="submit" class="bouton">Valider</button>'; // Ajout de la classe 'bouton'
+        $html .= '<button type="submit" id="valider" class="bouton">Valider</button>'; // Ajout de la classe 'bouton'
         $html .= '</div>'; // Fin du conteneur
         $html .= '</form>';
         $html .= '</div>';
