@@ -9,6 +9,13 @@ use Exception;
 
 class Connexion
 {
+    /**
+     * methode qui permet a un utilisateur de se connecter
+     * @param $username
+     * @param $password
+     * @return void
+     * @throws CompteException
+     */
     public static function connexion($username, $password) {
         $bd = ConnectionFactory::makeConnection();
         $st = $bd->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
@@ -22,6 +29,10 @@ class Connexion
         }
     }
 
+    /**
+     * methode qui s'execute quand le bouton est cliqué
+     * @return string
+     */
     public function execute(): string {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $username = $_POST['Username'];
@@ -35,7 +46,6 @@ class Connexion
                 $message = $e->getMessage();
             }
         }
-
         $form = '<div class="container">
                     <h2>Connexion</h2>
                     <form action="?action=connexion" method="post">

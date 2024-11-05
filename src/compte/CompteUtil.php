@@ -13,6 +13,12 @@ class compteUtil
     // Rôle de l'utilisateur (STANDARD ou ADMIN)
     private string $role;
 
+    /**
+     * constructeur de compte utilisateur
+     * @param string $username
+     * @param string $email
+     * @param string $role
+     */
     public function __construct(string $username, string $email, string $role) {
         if (strlen($username) > 50) {
             echo '<script>window.alert("Nom d\'utilisateur trop long (max 50 caractères)")</script>';

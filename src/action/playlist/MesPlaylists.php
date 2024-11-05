@@ -8,6 +8,12 @@ use PDO;
 
 class MesPlaylists {
 
+    /**
+     * fonction qui affiche la liste des playlistes
+     * @param string $username
+     * @return string
+     * @throws \iutnc\deefy\exception\CompteException
+     */
     public function AffichePlaylist(string $username): string {
         $bd = ConnectionFactory::makeConnection();
 
@@ -62,7 +68,12 @@ class MesPlaylists {
     }
 
 
-
+    /**
+     * fonction qui affiche la playlist courante
+     * @param int $playlistId
+     * @return string
+     * @throws \iutnc\deefy\exception\CompteException
+     */
     public function AffichePlaylistCourante(int $playlistId): string {
         $bd = ConnectionFactory::makeConnection();
         $stmt = $bd->prepare("SELECT titre FROM playlists WHERE playlist_id = :playlist_id");
@@ -98,6 +109,11 @@ class MesPlaylists {
     }
 
 
+    /**
+     * fonction qui permet d'ajouter une piste a la playlist courante
+     * @param int $playlistId
+     * @return string
+     */
     public function ajouterPiste(int $playlistId): string {
         $html = '<div class="container">';
         $html .= '<h3>Ajouter une musique</h3>';
@@ -116,6 +132,12 @@ class MesPlaylists {
         return $html;
     }
 
+    /**
+     * methode qui permet de sauvegarder une piste dans la base de donnees
+     * @param int $playlistId
+     * @return void
+     * @throws \iutnc\deefy\exception\CompteException
+     */
     private function sauvegarderPiste(int $playlistId) {
         if (isset($_POST['titre']) && isset($_POST['artiste'])) {
             $titre = $_POST['titre'];
@@ -155,6 +177,10 @@ class MesPlaylists {
     }
 
 
+    /**
+     * methode qui s'active lorsqu'on appuie sur le bouton
+     * @return string
+     */
     public function execute(): string {
         $s = '<div class="container">';
 

@@ -6,11 +6,12 @@ use iutnc\deefy\bd as bd;
 
 class DefaultAction
 {
-    public function __construct()
-    {
 
-    }
-
+    /**
+     * s'active quand on appuie sur le bouton
+     * @return string
+     * @throws \iutnc\deefy\exception\CompteException
+     */
     public function execute(): string
     {
         $pdo = bd\ConnectionFactory::makeConnection();

@@ -18,6 +18,11 @@ class Dispatcher
 
     }
 
+    /**
+     * fonction qui redistribue les taches en fonction de l'action effectuee par l'utilisateur
+     * @return void
+     * @throws \iutnc\deefy\exception\CompteException
+     */
     public function run(): void
     {
         switch ($this->action) {
@@ -47,6 +52,12 @@ class Dispatcher
         $this->renderPage($html);
     }
 
+    /**
+     * fonction qui affiche le render de la page en html
+     * une fois l'action du bouton effectuée
+     * @param string $html
+     * @return void
+     */
     private function renderPage(string $html): void
     {
         echo $html;

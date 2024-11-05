@@ -9,6 +9,13 @@ use iutnc\deefy\compte\compteUtil;
 
 class CreerPlaylist
 {
+    /**
+     * fonction qui cree une playlist vide
+     * @param $titre
+     * @param $username
+     * @return void
+     * @throws \iutnc\deefy\exception\CompteException
+     */
     public function creerPlaylist($titre, $username)
     {
         $bd = ConnectionFactory::makeConnection();
@@ -28,6 +35,10 @@ class CreerPlaylist
         }
     }
 
+    /**
+     * fonction qui s'active lorsqu'on appuie sur le bouton
+     * @return string
+     */
     public function execute(): string
     {
         $s = '<div class="container">';

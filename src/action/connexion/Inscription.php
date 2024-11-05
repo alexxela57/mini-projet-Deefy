@@ -11,6 +11,9 @@ class Inscription
 {
     /**
      * Vérifie la force du mot de passe
+     * @param string $pass
+     * @param int $minimumLength
+     * @return bool
      */
     public function checkPasswordStrength(string $pass, int $minimumLength = 8): bool
     {
@@ -24,6 +27,12 @@ class Inscription
 
     /**
      * Crée un nouveau compte utilisateur
+     * @param $username
+     * @param $email
+     * @param $password
+     * @param $role
+     * @return void
+     * @throws CompteException
      */
     public function CreerCompte($username, $email, $password, $role = 'STANDARD')
     {
@@ -31,7 +40,6 @@ class Inscription
             throw new CompteException("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
         }
 
-        // Connexion à la base de données
         $bd = ConnectionFactory::makeConnection();
 
         try {
@@ -62,6 +70,8 @@ class Inscription
 
     /**
      * Gère le processus d'inscription et affiche le formulaire
+     * @return string
+     * @throws CompteException
      */
     public function execute(): string
     {
@@ -81,7 +91,6 @@ class Inscription
                 $s .= "<p>Erreur : " . $e->getMessage() . "</p>";
             }
         }
-
         // Formulaire HTML
         $s .= '<form id="f1" action="?action=inscription" method="post">
                 <input type="text" name="username" placeholder="Nom d\'utilisateur" required>

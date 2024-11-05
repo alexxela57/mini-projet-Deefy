@@ -6,9 +6,17 @@ use Exception;
 use iutnc\deefy\exception\CompteException;
 
 class ConnectionFactory{
+    /**
+     * @var array attribut recuperant les configurations du fichier de configuration ini
+     */
     public static array $config;
     public static \PDO $connexion;
 
+    /**
+     * fonction qui permet d'appliquer la config initiale
+     * @param $file
+     * @return void
+     */
     public static function setConfig($file): void
     {
         if(isset(self::$config)===false){
@@ -16,6 +24,12 @@ class ConnectionFactory{
         }
     }
 
+    /**
+     * fonction qui permet de se connecter a la base de donnees a partir
+     * des configurations dans le fichier ini
+     * @return \PDO
+     * @throws CompteException
+     */
     public static function makeConnection(): \PDO
     {
         if (!isset(self::$connexion)) {
