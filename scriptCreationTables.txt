@@ -19,18 +19,30 @@ CREATE TABLE playlists (
 CREATE TABLE tracks (
     titre VARCHAR(100) NOT NULL,
     artiste VARCHAR(100) NOT NULL,
-    playlist_id INT NOT NULL,
     date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (titre,artiste),
-    CONSTRAINT fk_playlist FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id) ON DELETE CASCADE
+    PRIMARY KEY (titre,artiste)
+);
+
+-- Création de la table stock pour lier les pistes aux playlists
+CREATE TABLE stock (
+    playlist_id INT NOT NULL,
+    track_titre VARCHAR(100) NOT NULL,
+    track_artiste VARCHAR(100) NOT NULL,
+    PRIMARY KEY (playlist_id, track_titre, track_artiste),
+    CONSTRAINT fk_playlist FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id) ON DELETE CASCADE,
+    CONSTRAINT fk_track FOREIGN KEY (track_titre, track_artiste) REFERENCES tracks(titre, artiste) ON DELETE CASCADE
 );
 
 -- Ajout d'utilisateurs pour les tests
 INSERT INTO users (username, email, password, role) VALUES ('alexandre', 'alexandre@gmail.com', 'alexandre', 'STANDARD');
 INSERT INTO users (username, email, password, role) VALUES ('elias', 'elias@gmail.com', 'elias', 'STANDARD');
+INSERT INTO users (username, email, password, role) VALUES ('admin', 'a@gmail.com', 'a', 'ADMIN');
 
 -- Ajout d'une playlist pour les tests
 INSERT INTO playlists (titre, username) VALUES ('Playlist1', 'alexandre');
 
 -- Ajout d'une piste pour les tests
-INSERT INTO tracks (titre, artiste, playlist_id) VALUES ('Titre', 'Artiste', 1);
+INSERT INTO tracks (titre, artiste) VALUES ('Titre', 'Artiste');
+
+-- Ajout d'une relation dans la table stock pour tester l'appartenance
+INSERT INTO stock (playlist_id, track_titre, track_artiste) VALUES (1, 'Titre', 'Artiste');

@@ -42,10 +42,10 @@ class CreerPlaylist
                 try {
                     $this->creerPlaylist($titre, $username);
 
-                    // Utiliser AffichePlaylistCourante pour afficher uniquement la playlist nouvellement créée
-                    $mesPlaylists = new MesPlaylists();
-                    $s = $mesPlaylists->AffichePlaylistCourante($_SESSION['current_playlist_id']);
-                    return $s;  // Affiche la playlist courante directement
+                    // Rediriger vers l'affichage de la playlist courante
+                    header("Location: ?action=mesPlaylists&current_playlist_id=" . $_SESSION['current_playlist_id']);
+                    exit; // Terminez le script pour éviter d'afficher le reste de la page
+
                 } catch (Exception $e) {
                     $s .= "<p>Erreur : " . $e->getMessage() . "</p>";
                 }
@@ -55,11 +55,12 @@ class CreerPlaylist
         }
 
         $s .= '<form action="?action=creerPlaylist" method="post">
-            <input type="text" name="titre" placeholder="Titre de la playlist" required>
-            <button type="submit">Créer</button>
-           </form>';
+        <input class="ajoutForm" type="text" name="titre" placeholder="Titre de la playlist" required>
+        <button id="creer" type="submit">Créer</button>
+       </form>';
         $s .= '</div>';
 
         return $s;
     }
+
 }
