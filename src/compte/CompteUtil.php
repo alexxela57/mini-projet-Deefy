@@ -47,4 +47,8 @@ class compteUtil
             throw new \Exception("$at: propriété invalide");
         }
     }
+
+    public function getUsername(): string {
+        return $this->username;
+    }
 }
