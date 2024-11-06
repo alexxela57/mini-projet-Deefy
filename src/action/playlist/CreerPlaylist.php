@@ -45,7 +45,8 @@ class CreerPlaylist
         $s .= "<h2>Créer une Playlist</h2>";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $titre = $_POST["titre"] ?? '';
+            // Utilisation de filter_var pour éviter les injections XSS
+            $titre = filter_var($_POST["titre"] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             if (isset($_SESSION['connection']) && $_SESSION['connection'] instanceof compteUtil) {
                 $username = $_SESSION['connection']->username;
@@ -73,5 +74,4 @@ class CreerPlaylist
 
         return $s;
     }
-
 }

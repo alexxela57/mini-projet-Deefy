@@ -30,6 +30,7 @@
             );
 
             $isAdmin = (isset($_SESSION['connection']) && $_SESSION['connection']->role === 'ADMIN') ? 1 : 0;
+            $username = filter_var($username, FILTER_SANITIZE_STRING);
             $stmt->bindParam(':isAdmin', $isAdmin, PDO::PARAM_INT);
 
             if (!isset($_SESSION['connection']) || $_SESSION['connection']->role !== 'ADMIN') {
@@ -144,15 +145,16 @@
          */
         private function sauvegarderPiste(int $playlistId) {
             if (isset($_POST['titre']) && isset($_POST['artiste']) && isset($_FILES['fichier_mp3'])) {
-                $titre = $_POST['titre'];
-                $artiste = $_POST['artiste'];
+                $titre = filter_var($_POST['titre'], FILTER_SANITIZE_STRING); // Filtrage du titre de la piste
+                $artiste = filter_var($_POST['artiste'], FILTER_SANITIZE_STRING); // Filtrage de l'artiste
+                $playlistId = filter_var($playlistId, FILTER_VALIDATE_INT); // Validation de l'ID de la playlist
                 $fichier = $_FILES['fichier_mp3'];
 
                 // Définir le chemin complet pour le fichier MP3 avec le séparateur manquant
                 $destination = __DIR__ . '../../../../audio/' . basename($artiste."¤".$titre.".mp3");
 
                 // Déplacer le fichier uploadé
-                if ($fichier['error'] === UPLOAD_ERR_OK && move_uploaded_file($fichier['tmp_name'], $destination)) {
+                if ($fichier['error'] === UPLOAD_ERR_OK && mime_content_type($fichier['tmp_name']) === 'audio/mpeg' && move_uploaded_file($fichier['tmp_name'], $destination)) {
                     $bd = ConnectionFactory::makeConnection();
 
                     // Vérifier si la piste existe déjà dans la table tracks
