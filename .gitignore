@@ -6,7 +6,6 @@
 *.idea
 /vendor
 /conf
-*.mp3
 # the fuelphp document
 /docs/
 
