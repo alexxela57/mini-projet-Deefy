@@ -120,7 +120,7 @@ class MesPlaylists {
         $html .= '<form method="post" action="?action=mesPlaylists&current_playlist_id=' . $playlistId . '&addTrack=1">';
         $html .= '<label for="titre">Titre :</label>';
         $html .= '<input class="ajoutForm" type="text" name="titre" id="titre" required>';
-        $html .= '<label for="artiste">Artiste :</label>';
+        $html .= '<br><label for="artiste">Artiste :</label>';
         $html .= '<input class="ajoutForm" type="text" name="artiste" id="artiste" required>';
 
         // Nouveau conteneur pour le bouton
