@@ -119,7 +119,7 @@
             } else {
                 $trackIndex = 0;
                 foreach ($tracks as $track) {
-                    $src = "./audio/" . urlencode($track['artiste'] . "¤" . $track["titre"]) . ".mp3";
+                    $src = "./audio/" . $track['artiste'] . "¤" . $track["titre"] . ".mp3";
                     $html .= '<li>' . htmlspecialchars($track['titre']) . ' - ' . htmlspecialchars($track['artiste']);
                     $html .= '<br><audio id="audio' . $trackIndex . '" controls><source src="' . $src . '" type="audio/mp3"></audio></li>';
                     $trackIndex++;
