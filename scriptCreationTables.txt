@@ -42,7 +42,10 @@ INSERT INTO users (username, email, password, role) VALUES ('admin', 'a@gmail.co
 INSERT INTO playlists (titre, username) VALUES ('Playlist1', 'alexandre');
 
 -- Ajout d'une piste pour les tests
-INSERT INTO tracks (titre, artiste) VALUES ('Titre', 'Artiste');
+INSERT INTO tracks (titre, artiste) VALUES ('Never Gonna Give You Up', 'Rick Astley');
+INSERT INTO tracks (titre, artiste) VALUES ('Take On Me', 'A-ha');
 
 -- Ajout d'une relation dans la table stock pour tester l'appartenance
-INSERT INTO stock (playlist_id, track_titre, track_artiste) VALUES (1, 'Titre', 'Artiste');
+INSERT INTO stock (playlist_id, track_titre, track_artiste) VALUES (1, 'Never Gonna Give You Up', 'Rick Astley');
+INSERT INTO stock (playlist_id, track_titre, track_artiste) VALUES (1, 'Take On Me', 'A-ha');
+
