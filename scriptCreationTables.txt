@@ -34,9 +34,9 @@ CREATE TABLE stock (
 );
 
 -- Ajout d'utilisateurs pour les tests
-INSERT INTO users (username, email, password, role) VALUES ('alexandre', 'alexandre@gmail.com', 'alexandre', 'STANDARD');
-INSERT INTO users (username, email, password, role) VALUES ('elias', 'elias@gmail.com', 'elias', 'STANDARD');
-INSERT INTO users (username, email, password, role) VALUES ('admin', 'a@gmail.com', 'a', 'ADMIN');
+INSERT INTO users (username, email, password, role) VALUES ('alexandre', 'alexandre@gmail.com', '$2y$10$sMM60WBD/O4xHehwvKaa5uAFTsWEjXoepDrM4GRhmohWJNQP3va8G', 'STANDARD');
+INSERT INTO users (username, email, password, role) VALUES ('elias', 'elias@gmail.com', '$2y$10$fPEQopA.oJl1H1B0BYE7HO0baBvIXg6i12eZYjXHGa2bU5vtoivCC', 'STANDARD');
+INSERT INTO users (username, email, password, role) VALUES ('admin', 'a@gmail.com', '$2y$10$INi4UOokaD.PDJ12Ir13PuQDUjj1BGLqeN3VqYxFelfpk88zVsftO', 'ADMIN');
 
 -- Ajout d'une playlist pour les tests
 INSERT INTO playlists (titre, username) VALUES ('Playlist1', 'alexandre');
