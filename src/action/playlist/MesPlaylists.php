@@ -100,7 +100,8 @@
                 $html .= '</ul><p>Aucune piste pour le moment.</p>';
             } else {
                 foreach ($tracks as $track) {
-                    $src = "../../../../audio/".$track['artiste']."¤".$track["titre"];
+                    $src = "./audio/".$track['artiste']."¤".$track["titre"].".mp3";
+                    echo $src."<br>";
                     if (file_exists($src)) {
                         echo "yes";
                     }
