@@ -3,7 +3,7 @@ body {
     grid-template-columns: 3fr;
     grid-template-rows: 75px auto;
     background-color: rgb(16, 88, 91);
-    background-image: url('../src/logo.png'); /* Chemin vers votre logo */
+    background-image: url('./src/logo.png'); /* Chemin vers votre logo */
     background-size: 50%; /* Fait en sorte que l'image couvre tout l'élément */
     background-position: center; /* Centre l'image */
     background-repeat: no-repeat; /* Empêche la répétition de l'image */
